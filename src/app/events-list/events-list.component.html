@@ -1,0 +1,15 @@
+<div *ngIf="data.length !=0" class="events-list">
+    <event-card *ngFor="let event of data"
+                class="events-list__card"
+                [image]="'/api/images/' + event.imageName"
+                [place]="event.address"
+                [date]="event.eventDate"
+                [duration]="event.eventDuration"
+                [title]="event.title"
+    ></event-card>
+</div>
+<div *ngIf="data.length == 0" class="events-list-empty">
+    <div class="events-list-empty__info">Мероприятий на это число не запланировано
+    </div>
+    <img class="events-list-empty__image" src="../../assets/not-found.svg"/>
+</div>

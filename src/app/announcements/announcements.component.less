@@ -1,0 +1,134 @@
+.announcements {
+    height: 700px;
+    margin: 85px 0;
+    overflow: hidden;
+
+    &__title {
+        margin-bottom: 70px;
+        font-size: 54px;
+        font-weight: 700;
+    }
+
+    &__slider-wrapper {
+        position: relative;
+    }
+
+    &__slide {
+        width: 1220px;
+        height: 500px;
+        font-size: 16px;
+        font-weight: 400;
+
+        &-fade {
+            background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+            width: 100%;
+            position: absolute;
+            top: 40%;
+            height: 300px;
+            z-index: 1;
+            border-radius: 20px;
+        }
+
+        &-image {
+            width: 100%;
+            background: grey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #fff;
+            font-weight: 500;
+            height: 500px;
+            max-height: 100vh;
+            border-radius: 20px;
+        }
+
+        &-info-wrapper {
+            position: absolute;
+            color: #C2C2C2;
+            bottom: 80px;
+            left: 104px;
+            z-index: 2;
+        }
+
+        &-title {
+            font-size: 54px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        &-date{
+
+          & > img {
+            position: relative;
+            top: 2px;
+            left: 2px;
+            margin-right: 9px;
+          }
+        }
+
+        &-place{
+
+          & > img {
+            position: relative;
+            top: 6px;
+            margin-right: 5px;
+          }
+        }
+    }
+
+    &__dots {
+        display: flex;
+        padding: 10px 0;
+        justify-content: center;
+    }
+
+    &__dot {
+        border: none;
+        width: 10px;
+        height: 10px;
+        background: #c5c5c5;
+        border-radius: 50%;
+        margin: 0 5px;
+        padding: 5px;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.active {
+            background: #000;
+        }
+    }
+
+    &__slider {
+        display: flex;
+    }
+
+    &__arrow {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        fill: #fff;
+        cursor: pointer;
+        transition: background .25s;
+
+        &.arrow--left {
+            left: 5px;
+        }
+
+        &.arrow--right {
+            left: auto;
+            right: 5px;
+        }
+    }
+
+    [class^="number-slide"],
+    [class*=" number-slide"] {
+    }
+}

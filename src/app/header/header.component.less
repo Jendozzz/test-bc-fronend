@@ -1,0 +1,55 @@
+.header-menu {
+    width: 100%;
+    background: white;
+    height: 70px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.18);
+
+    &__wrapper {
+        display: flex;
+        width: 1220px;
+        justify-content: space-between;
+        margin: 0 auto;
+    }
+
+    &__action {
+        padding: 15px 35px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+
+        &._login {
+            width: 120px;
+            background: white;
+            color: #7635bd;
+            transition: background .25s;
+
+            &:hover {
+                background: #F4F4F4;
+            }
+
+            &:active {
+                background: #E8E8E8;
+            }
+        }
+
+        &._register {
+            width: 234px;
+            background: #7635BD;
+            color: white;
+            margin-left: 16px;
+            transition: background .25s;
+
+            &:hover, &:active {
+                background: #6928B0;
+            }
+        }
+    }
+
+    &__actions {
+        width: 379px;
+        height: 49px;
+        margin-top: 12px;
+        font-size: 16px;
+        font-weight: 700;
+    }
+}

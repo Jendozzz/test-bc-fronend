@@ -1,0 +1,45 @@
+<div class="announcements">
+    <div class="announcements__title">Анонс мероприятий</div>
+    <div class="announcements__slider-wrapper">
+        <div class="announcements__slider" #sliderRef>
+            <div class="announcements__slide keen-slider__slide number-slide1"
+                 *ngFor="let announcement of data"
+            >
+                <img class="announcements__slide-image" src="{{'/api/images/' + announcement.imageName }}">
+                <div class="announcements__slide-fade"></div>
+                <div class="announcements__slide-info-wrapper">
+                    <div class="announcements__slide-title">{{ announcement.title }}</div>
+                    <div class="announcements__slide-date"><img src="../../assets/Time.svg">{{ announcement.eventDate }}</div>
+                    <div class="announcements__slide-place"><img src="../../assets/location.svg">{{ announcement.address }}</div>
+                </div>
+            </div>
+        </div>
+        <svg
+            *ngIf="data.length > 1"
+            class="announcements__arrow arrow--left"
+            (click)="slider.prev()"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+        >
+            <path
+                d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
+            />
+        </svg>
+        <svg
+            *ngIf="data.length > 1"
+            class="announcements__arrow arrow--right"
+            (click)="slider.next()"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+        >
+            <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+        </svg>
+    </div>
+    <div class="announcements__dots" *ngIf="data.length > 1">
+        <button
+            (click)="slider.moveToIdx(i)"
+            *ngFor="let slide of dotHelper; let i = index"
+            [class]="'announcements__dot ' + (i === currentSlide ? 'active' : '')"
+        ></button>
+    </div>
+</div>
