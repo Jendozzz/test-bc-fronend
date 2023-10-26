@@ -21,6 +21,7 @@ jobs:
         ls dist/business-calendar
 
   archive:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: create archive
