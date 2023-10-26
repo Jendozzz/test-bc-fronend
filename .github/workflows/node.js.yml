@@ -27,7 +27,5 @@ jobs:
       run: |
         npm install
         npm run build
-        cd dist
+        cd dist\business-calendar
         ls
-      env:
-        CI: true
