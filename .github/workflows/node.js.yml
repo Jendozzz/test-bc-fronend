@@ -16,6 +16,7 @@ jobs:
         node-version: 16
     - name: Install, test
       run: |
+        ls -a
         npm install
         npm run build
         ls dist/business-calendar
@@ -28,5 +29,5 @@ jobs:
       run: |
         pwd
         ls -a
-        cd ..
+        cd ../..
         ls -a
