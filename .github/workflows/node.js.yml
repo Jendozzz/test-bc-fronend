@@ -23,6 +23,6 @@ jobs:
         ls dist/business-calendar
     - name: archive
       run: |
-        zip -r dist/business-calendar
-
-
+        tar -cf tmp.zip dist/business-calendar
+        ls -a
+        
