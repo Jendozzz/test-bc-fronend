@@ -26,5 +26,4 @@ jobs:
     steps:
     - name: create archive
       run: |
-        tar -cf tmp.zip dist/business-calendar
         ls
