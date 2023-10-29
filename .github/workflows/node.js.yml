@@ -21,13 +21,13 @@ jobs:
         echo ${HASH}
     - name: DATE
       run: |
-        DATE=${GIT_COMMITTER_DATE}
+        DATE=$(date +'%d-%m-%Y')
         echo ${DATE}
   deploy:
     runs-on: ubuntu-latest
     needs: set-vars
     steps:
-    
+    - uses: actions/checkout@v4
     - uses: actions/setup-node@v3
       with:
         node-version: 16
