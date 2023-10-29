@@ -25,10 +25,9 @@ jobs:
       run: |
         tar -cf tmp.zip dist/business-calendar
         ls -a
-    - uses: povetek/yandex-object-storage-action@v3
+    - uses: MrMeison/yc-object-storage-upload-action@main
       with:
-        access-key-id: ${{ secrets.ACCESS_KEY_ID }}
-        secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        bucket: ${{ secrets.BUCKET }}
-        path: tmp.zip
-        clear: true
+        accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
+        secretAccessKey: ${{ secrets.SECRET_ACCESS_KEY }}
+        bucketName: ${{ secrets.BUCKET }}
+        include: /*.zip
