@@ -16,7 +16,7 @@ jobs:
         echo ${BRANCH}
     - name: HASH
       run: |
-        git rev-parse --short ${GITHUB_SHA} >> HASH
+        HASH=$(git rev-parse --short ${{GITHUB_SHA}})
         echo ${HASH}
     - name: DATE
       run: |
