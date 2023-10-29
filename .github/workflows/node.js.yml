@@ -25,7 +25,7 @@ jobs:
         npm run build
     - name: archive
       run: |
-        tar -cf bc-frontend-${BRANCH}-${HASH}-${DATE}.zip dist/business-calendar
+        tar -cf "bc-frontend-${BRANCH}-${HASH}-${DATE}.zip" dist/business-calendar
         ls -a
     - uses: nekitcorp/yandex-storage-website-action@v2
       with:
