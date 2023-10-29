@@ -12,6 +12,13 @@ env:
   DATE: ${GIT_COMMITTER_DATE}
             
 jobs:
+  set-vars:
+    runs-on: ubuntu-latest
+    steps:
+    - name: BRANCH
+      run: |
+        BRANCH=${GITHUB_REF#refs/heads/}
+        echo BRANCH
   deploy:
     runs-on: ubuntu-latest
     steps:
