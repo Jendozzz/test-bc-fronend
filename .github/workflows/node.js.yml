@@ -6,20 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  BRANCH: ${GITHUB_REF}
+  HASH: $(git rev-parse --short "$GITHUB_SHA")
+  DATE: ${GIT_COMMITTER_DATE}
+            
 jobs:
-  set-env:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set environment variables
-        run: |
-          echo "BRANCH=${GITHUB_REF}" >> $BRANCH
-          echo "HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $HASH
-          echo "DATE=${GIT_COMMITTER_DATE}" >> $DATE
-      - name: Use environment variables
-        run: |
-          echo "BRANCH=${BRANCH}"
-          echo "HASH=${HASH}"
-          echo "DATE=${DATE}"
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +25,7 @@ jobs:
         npm run build
     - name: archive
       run: |
-        tar -cf tmp.zip dist/business-calendar
+        tar -cf bc-frontend-${BRANCH}-${HASH}-${DATE}.zip dist/business-calendar
         ls -a
     - uses: nekitcorp/yandex-storage-website-action@v2
       with:
