@@ -31,3 +31,4 @@ jobs:
         secretAccessKey: ${{ secrets.SECRET_ACCESS_KEY }}
         bucketName: ${{ secrets.BUCKET }}
         include: /*.zip
+        includeDots: true
