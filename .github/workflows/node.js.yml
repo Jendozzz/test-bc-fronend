@@ -25,7 +25,7 @@ jobs:
       run: |
         tar -cf tmp.zip dist/business-calendar
         ls -a
-    - uses: MrMeison/yc-object-storage-upload-action@main
+    - uses: MrMeison/yc-object-storage-action@1.2.1
       with:
         accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
         secretAccessKey: ${{ secrets.SECRET_ACCESS_KEY }}
