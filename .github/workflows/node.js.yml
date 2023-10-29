@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  BRANCH: ${{ github.ref }}
+  BRANCH: ${GITHUB_REF#refs/heads/}
   HASH: $(git rev-parse --short "$GITHUB_SHA")
   DATE: ${GIT_COMMITTER_DATE}
             
