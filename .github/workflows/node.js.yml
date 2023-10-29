@@ -31,4 +31,4 @@ jobs:
         secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         bucket: ${{ secrets.BUCKET }}
         include: |
-          /*.zip
+          tmp.zip
