@@ -18,7 +18,7 @@ jobs:
     - name: BRANCH
       run: |
         BRANCH=${GITHUB_REF#refs/heads/}
-        echo BRANCH
+        echo ${BRANCH}
   deploy:
     runs-on: ubuntu-latest
     steps:
