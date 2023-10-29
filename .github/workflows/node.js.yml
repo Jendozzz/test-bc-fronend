@@ -5,11 +5,6 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-env:
-  BRANCH: ${GITHUB_REF#refs/heads/}
-  HASH: $(git rev-parse --short "$GITHUB_SHA")
-  DATE: ${GIT_COMMITTER_DATE}
             
 jobs:
   set-vars:
@@ -19,8 +14,17 @@ jobs:
       run: |
         BRANCH=${GITHUB_REF#refs/heads/}
         echo ${BRANCH}
+    - name: HASH
+      run: |
+        git rev-parse --short "$GITHUB_SHA" >> HASH
+        echo ${HASH}
+    - name: DATE
+      run: |
+        DATE=${GIT_COMMITTER_DATE}
+        echo ${DATE}
   deploy:
     runs-on: ubuntu-latest
+    needs: set-vars
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v3
