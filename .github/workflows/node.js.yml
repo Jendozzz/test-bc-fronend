@@ -7,20 +7,17 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-archive:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-    - name: Install, test
+    - name: build
       run: |
         npm install
         npm run build
-        pwd
-        ls -a
-        ls dist/business-calendar
     - name: archive
       run: |
         tar -cf tmp.zip dist/business-calendar
@@ -31,4 +28,4 @@ jobs:
         secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         bucket: ${{ secrets.BUCKET }}
         include: |
-          tmp.zip
+          *.zip
