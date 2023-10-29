@@ -25,10 +25,10 @@ jobs:
       run: |
         tar -cf tmp.zip dist/business-calendar
         ls -a
-    - uses: MrMeison/yc-object-storage-action@1.2.1
+    - uses: nekitcorp/yandex-storage-website-action@v2
       with:
-        accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
-        secretAccessKey: ${{ secrets.SECRET_ACCESS_KEY }}
-        bucketName: ${{ secrets.BUCKET }}
-        include: /*.zip
-        includeDots: true
+        access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+        bucket: ${{ secrets.BUCKET }}
+        include: |
+          /*.zip
