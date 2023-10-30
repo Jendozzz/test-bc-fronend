@@ -41,9 +41,9 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          s3cmd get -r s3://storage-bc/${{ env.filename }}
+          s3cmd get -r s3://storage-bc/bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
           sudo rm -r /var/www/site
-          sudo unzip ${{ env.filename }} -d /var/www/site
+          sudo unzip bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip -d /var/www/site
   
 
 
