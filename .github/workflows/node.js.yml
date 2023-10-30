@@ -8,11 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: tmp
+      run: |
+        output=${{ vars.BRANCH }}
+        echo ::set-output name=script_output::$output
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
       env: 
         FILE: bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
-        BRANCH: ${{ vars.BRANCH }}
+        BRANCH: ${script_output}
         SHA: ${{ github.sha }}
       with:
         host: ${{ secrets.HOST }}
