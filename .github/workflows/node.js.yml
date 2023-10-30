@@ -9,8 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: tmp
+      env: 
+        BRANCH: ${{ vars.BRANCH }}
       run: |
-        BRANCH="${{ vars.BRANCH }}"
         echo "${BRANCH}"
     - name: executing remote ssh commands using ssh key
       
