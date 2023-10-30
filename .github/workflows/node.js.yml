@@ -19,7 +19,7 @@ jobs:
       env: 
         filename: bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
       run: |
-        zip -j "$filename" dist/business-calendar/*
+        zip -j "${filename}" dist/business-calendar/*
     - uses: nekitcorp/yandex-storage-website-action@v2
       with:
         access-key-id: ${{ secrets.ACCESS_KEY_ID }}
