@@ -11,6 +11,7 @@ jobs:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
       env: 
+        FILE: bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
         BRANCH: ${{ vars.BRANCH }}
         SHA: ${{ github.sha }}
       with:
@@ -18,8 +19,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        envs: $BRANCH,SHA
+        envs: $BRANCH,SHA,FILE
         script: |
           echo "$SHA"
-          echo "$BRANCH"
+          echo "$FILE"
           
