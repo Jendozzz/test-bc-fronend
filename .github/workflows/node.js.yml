@@ -9,12 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: tmp
-      run: echo "${{ vars.BRANCH }}"
+      run: echo "${{ vars.BRANCH }}" >> $BRANCH
     - name: executing remote ssh commands using ssh key
       
       uses: appleboy/ssh-action@v1.0.0
-      env: 
-        BRANCH: $vars.BRANCH 
+
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
