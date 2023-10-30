@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: tmp
       run: |
-        BRANCH="$({{ vars.BRANCH }})"
+        BRANCH="${{ vars.BRANCH }}"
         echo "${BRANCH}"
     - name: executing remote ssh commands using ssh key
       
