@@ -4,7 +4,10 @@ on:
   workflow_dispatch
 
 env:
-  filename: bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
+  BRANCH: ${{ vars.BRANCH }}
+  HASH: ${{ vars.HASH }}
+  DATE: ${{ vars.DATE }}
+  filename: bc-frontend-${ BRANCH }-${ HASH }-${ DATE }.zip
        
 jobs:
   create-app:
