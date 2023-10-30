@@ -11,7 +11,7 @@ jobs:
     - name: tmp
       run: |
         echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        echo "$BRANCH"
+        echo ${{ outputs.BRANCH }}
 
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
