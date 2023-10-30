@@ -11,7 +11,7 @@ jobs:
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        BRANCH: ${{ vars.BRANCH }}
+        BRANCH: $(${{ vars.BRANCH }})
         SHA: ${{ github.sha }}
       with:
         host: ${{ secrets.HOST }}
