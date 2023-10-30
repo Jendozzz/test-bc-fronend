@@ -10,8 +10,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: tmp
       run: |
-        echo "BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        echo ${{ outputs.BRANCH }}
+        echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+        echo $BRANCH
 
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
