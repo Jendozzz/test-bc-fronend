@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: tmp
       run: |
-        output=$(${GITHUB_REF#refs/heads/})
+        output=${GITHUB_REF#refs/heads/}
         echo ::set-output name=script_output::$output
         echo "$script_output"
     - name: executing remote ssh commands using ssh key
