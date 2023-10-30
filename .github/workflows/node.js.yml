@@ -33,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-app
     steps:
+    - uses: actions/checkout@v4
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
       with:
