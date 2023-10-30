@@ -9,15 +9,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: tmp
-      env: 
-        BRANCH: ${{ vars.BRANCH }}
-        SHA: ${{ github.sha }}
-      run: |
-        echo "${BRANCH}"
+
     - name: executing remote ssh commands using ssh key
       
       uses: appleboy/ssh-action@v1.0.0
-
+      env: 
+        BRANCH: ${{ vars.BRANCH }}
+        SHA: ${{ github.sha }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -26,4 +24,5 @@ jobs:
         envs: BRANCH,SHA
         script: |
           echo "$SHA"
+          echo "$BRANCH"
           
