@@ -16,7 +16,7 @@ jobs:
         echo ::set-output name=DATE::$(date +'%d-%m-%Y')
     - name: set filename
       id: filename
-      run: echo ::set-output name=FILENAME::${-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.HASH }}-${{ steps.vars.outputs.DATE }}}
+      run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.HASH }}-${{ steps.vars.outputs.DATE }}}
     - name: test
       run: |
         echo ${{ steps.vars.outputs.BRANCH }}
