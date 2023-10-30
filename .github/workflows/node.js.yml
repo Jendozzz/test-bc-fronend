@@ -13,12 +13,14 @@ jobs:
     - name: executing remote ssh commands using ssh key
       
       uses: appleboy/ssh-action@v1.0.0
+      env: 
+        BRANCH: ${{ vars.BRANCH }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        envs: ${{ vars.BRANCH }}
+        envs: BRANCH
         script: |
           echo "$BRANCH"
           
