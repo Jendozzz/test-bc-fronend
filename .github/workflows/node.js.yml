@@ -23,8 +23,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        envs: $BRANCH,SHA,FILE
+        envs: BRANCH,SHA,FILE
         script: |
           echo "$SHA"
-          echo "$FILE"
+          echo "$BRANCH"
           
