@@ -9,7 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: tmp
-      run: BRANCH="${{ vars.BRANCH }}"
+      run: |
+        BRANCH="$({{ vars.BRANCH }})"
+        echo "${BRANCH}"
     - name: executing remote ssh commands using ssh key
       
       uses: appleboy/ssh-action@v1.0.0
