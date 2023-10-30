@@ -9,9 +9,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: tmp
+      id: vars
       run: |
-        echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
-        echo $BRANCH
+        echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+        echo $short_ref
+    - name: test
+      run: echo ${{ steps.vars.outputs.short_ref }}
 
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
