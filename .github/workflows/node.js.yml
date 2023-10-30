@@ -14,11 +14,14 @@ jobs:
         echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=HASH::$(git rev-parse --short ${GITHUB_SHA})
         echo ::set-output name=DATE::$(date +'%d-%m-%Y')
+        echo ::set-output name=FILENAME::$(bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.HASH }}-${{ steps.vars.outputs.DATE }})
     - name: test
       run: |
         echo ${{ steps.vars.outputs.BRANCH }}
         echo ${{ steps.vars.outputs.HASH }}
         echo ${{ steps.vars.outputs.DATE }}
+        echo ${{ steps.vars.outputs.FILENAME }}
+    
 
 
     - name: executing remote ssh commands using ssh key
