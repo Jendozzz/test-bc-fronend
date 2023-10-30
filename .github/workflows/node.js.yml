@@ -18,7 +18,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        envs: BRANCH
+        envs: ${{ vars.BRANCH }}
         script: |
           echo "$BRANCH"
           
