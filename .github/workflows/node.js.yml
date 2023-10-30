@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 
 jobs:
-  create_app:
+  create-app:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
       env: 
         filename: bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
       run: |
-        zip -j "${{ env.filename }}" dist/business-calendar/*
+        zip -j "$filename" dist/business-calendar/*
     - uses: nekitcorp/yandex-storage-website-action@v2
       with:
         access-key-id: ${{ secrets.ACCESS_KEY_ID }}
@@ -30,7 +30,7 @@ jobs:
           
   deploy-on-vm:
     runs-on: ubuntu-latest
-    needs: create_app
+    needs: create-app
     steps:
     - uses: actions/checkout@v4
     - name: executing remote ssh commands using ssh key
@@ -41,9 +41,9 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          s3cmd get -r s3://storage-bc/${{ create_app.filename }}
+          s3cmd get -r s3://storage-bc/${{ env.filename }}
           sudo rm -r /var/www/site
-          sudo unzip ${{ create-app.filename }} -d /var/www/site
+          sudo unzip ${{ env.filename }} -d /var/www/site
   
 
 
