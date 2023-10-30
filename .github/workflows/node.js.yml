@@ -3,12 +3,6 @@ name: Deploy Frontend App
 on:
   workflow_dispatch
 
-env:
-  BRANCH: ${{ vars.BRANCH }}
-  HASH: ${{ vars.HASH }}
-  DATE: ${{ vars.DATE }}
-  filename: bc-frontend-${ BRANCH }-${ HASH }-${ DATE }.zip
-       
 jobs:
   create-app:
     runs-on: ubuntu-latest
@@ -23,7 +17,7 @@ jobs:
         npm run build
     - name: archive
       run: |
-        zip -j "${{ env.filename }}" dist/business-calendar/*
+        zip -j "bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip" dist/business-calendar/*
     - uses: nekitcorp/yandex-storage-website-action@v2
       with:
         access-key-id: ${{ secrets.ACCESS_KEY_ID }}
@@ -45,9 +39,9 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          s3cmd get -r s3://storage-bc/${{ env.filename }}
+          s3cmd get -r s3://storage-bc/bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip
           sudo rm -r /var/www/site
-          sudo unzip ${{ env.filename }} -d /var/www/site
+          sudo unzip bc-frontend-${{ vars.BRANCH }}-${{ vars.HASH }}-${{ vars.DATE }}.zip -d /var/www/site
   
 
 
