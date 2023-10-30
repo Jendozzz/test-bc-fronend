@@ -12,6 +12,7 @@ jobs:
       run: |
         output=${{ vars.BRANCH }}
         echo ::set-output name=script_output::$output
+        echo "$script_output"
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@v1.0.0
       env: 
