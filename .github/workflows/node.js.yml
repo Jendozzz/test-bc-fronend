@@ -44,7 +44,11 @@ jobs:
     #     bucket: ${{ secrets.BUCKET }}
     #     include: |
     #       *.zip
-
+    - name: test
+      if:  inputs.target-env == 'deploy on teststand'
+      run: |
+        echo ${{ secrets.HOST }}
+        echo ${{ secrets.USERNAME }}
     - name: connect to teststand and deploy 
       if:  inputs.target-env == 'deploy on teststand'
       uses: appleboy/ssh-action@v1.0.0
