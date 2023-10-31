@@ -36,7 +36,6 @@ jobs:
         
     - name: archive
       run: |
-        pwd
         cd dist/business-calendar
         zip -r "${{ steps.filename.outputs.FILENAME }}" ./*
         
@@ -47,19 +46,19 @@ jobs:
         secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         bucket: ${{ secrets.BUCKET }}
         include: |
-          *.zip
+          dist/business-calendar/*.zip
 
-    # - name: connect to vm and deploy 
-    #   uses: appleboy/ssh-action@v1.0.0
-    #   env: 
-    #     FILE: ${{ steps.filename.outputs.FILENAME }}
-    #   with:
-    #     host: ${{ secrets.HOST }}
-    #     username: ${{ secrets.USERNAME }}
-    #     key: ${{ secrets.KEY }}
-    #     port: ${{ secrets.PORT }}
-    #     envs: FILE
-    #     script: |
-    #       s3cmd get -r s3://storage-bc/$FILE
-    #       sudo rm -r /var/www/site
-    #       sudo unzip $FILE -d /var/www/site
+    - name: connect to vm and deploy 
+      uses: appleboy/ssh-action@v1.0.0
+      env: 
+        FILE: ${{ steps.filename.outputs.FILENAME }}
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        envs: FILE
+        script: |
+          s3cmd get -r s3://storage-bc/$FILE
+          sudo rm -r /var/www/site
+          sudo unzip $FILE -d /var/www/site
