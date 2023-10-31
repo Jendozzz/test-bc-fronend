@@ -45,34 +45,11 @@ jobs:
         include: |
           *.zip
 
-    - name: return filename
-      id: set_filename
-      uses: noobly314/share-data@v1
-      with:
-        share-id: filename
-        mode: set
-        key: FILENAME
-        value: ${{ steps.filename.outputs.FILENAME }}
-
-  deployTest:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: 
-      name: deploy on teststand   
-      url: https://github.com/Jendozzz/test-bc-fronend/settings/environments/1571476521/edit
-    steps:
-    - name: receive filename
-      id: get_filename
-      uses: noobly314/share-data@v1
-      with:
-        share-id: filename
-        mode: get
-        key: FILENAME
-        
-    - name: connect to vm and deploy 
+    - name: connect to teststand and deploy 
+      if:  inputs.target-env == 'deploy on teststand'
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        FILE: ${{ steps.get_filename.FILENAME }}
+        FILE: ${{ steps.filename.outputs.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -82,27 +59,13 @@ jobs:
         script: |
           s3cmd get -r s3://storage-bc/$FILE
           sudo rm -r /var/www/site
-          sudo unzip $FILE -d /var/www/site   
+          sudo unzip $FILE -d /var/www/site
 
-  deployProd:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: 
-      name: deploy on webserver 
-      url: https://github.com/Jendozzz/test-bc-fronend/settings/environments/1571456125/edit
-    steps:
-    - name: receive filename
-      id: get_filename
-      uses: noobly314/share-data@v1
-      with:
-        share-id: filename
-        mode: get
-        key: FILENAME
-        
-    - name: connect to vm and deploy 
+    - name: connect to webserver and deploy 
+      if:  inputs.target-env == 'deploy on webserver'
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        FILE: ${{ steps.get_filename.FILENAME }}
+        FILE: ${{ steps.filename.outputs.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -112,4 +75,4 @@ jobs:
         script: |
           s3cmd get -r s3://storage-bc/$FILE
           sudo rm -r /var/www/site
-          sudo unzip $FILE -d /var/www/site  
+          sudo unzip $FILE -d /var/www/site
