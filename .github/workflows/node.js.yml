@@ -36,7 +36,7 @@ jobs:
         
     - name: archive
       run: |
-        zip -jr "${{ steps.filename.outputs.FILENAME }}" dist/business-calendar/*
+        zip -r "${{ steps.filename.outputs.FILENAME }}" dist/business-calendar/*
         
     - name: upload in yandex storage
       uses: nekitcorp/yandex-storage-website-action@v2
