@@ -1,23 +1,14 @@
 name: Deploy Frontend App
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       target-env:
         required: true
-        type: string
-    secrets:
-      HOST:
-        required: true
-      PORT:
-        required: true
-      KEY:
-        required: true
-      USERNAME:
-        required: true
+        type: environment
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -53,11 +44,17 @@ jobs:
         bucket: ${{ secrets.BUCKET }}
         include: |
           *.zip
-          
+
+  deployTest:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: deploy on teststand      
+    steps:
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
+        
       env: 
-        FILE: ${{ steps.filename.outputs.FILENAME }}
+        FILE: ${{ build.steps.filename.outputs.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -67,4 +64,25 @@ jobs:
         script: |
           s3cmd get -r s3://storage-bc/$FILE
           sudo rm -r /var/www/site
-          sudo unzip $FILE -d /var/www/site          
+          sudo unzip $FILE -d /var/www/site   
+
+  deployProd:
+    runs-on: ubuntu-latest
+    needs: build
+    environment: deploy on webserver     
+    steps:
+    - name: connect to vm and deploy 
+      uses: appleboy/ssh-action@v1.0.0
+        
+      env: 
+        FILE: ${{ build.steps.filename.outputs.FILENAME }}
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        envs: FILE
+        script: |
+          s3cmd get -r s3://storage-bc/$FILE
+          sudo rm -r /var/www/site
+          sudo unzip $FILE -d /var/www/site  
