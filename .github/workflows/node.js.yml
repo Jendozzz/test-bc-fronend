@@ -37,7 +37,7 @@ jobs:
     - name: archive
       run: |
         cd dist/business-calendar
-        zip -r "${{ steps.filename.outputs.FILENAME }}" ./*
+        zip -r "${GITHUB_WORKSPACE}/${{ steps.filename.outputs.FILENAME }}" ./*
         
     - name: upload in yandex storage
       uses: nekitcorp/yandex-storage-website-action@v2
@@ -46,7 +46,7 @@ jobs:
         secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
         bucket: ${{ secrets.BUCKET }}
         include: |
-          dist/business-calendar/*.zip
+          *.zip
 
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
