@@ -1,7 +1,11 @@
 name: Deploy Frontend App
 
 on:
-  workflow_dispatch
+  workflow_call:
+    inputs:
+      target-env:
+        required: true
+        type: string
 
 jobs:
   deploy:
