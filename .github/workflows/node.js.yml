@@ -70,7 +70,7 @@ jobs:
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        FILE: ${{ jobs.build.steps.filename.outputs.FILENAME }}
+        FILE: ${{ steps.get_filename.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -98,7 +98,7 @@ jobs:
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        FILE: ${{ jobs.build.steps.filename.outputs.FILENAME }}
+        FILE: ${{ steps.get_filename.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
