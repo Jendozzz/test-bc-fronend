@@ -54,7 +54,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.0
         
       env: 
-        FILE: ${{ steps.filename.outputs.FILENAME }}
+        FILE: ${{ jobs.build.steps.filename.outputs.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -75,7 +75,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.0
         
       env: 
-        FILE: ${{ steps.filename.outputs.FILENAME }}
+        FILE: ${{ jobs.build.steps.filename.outputs.FILENAME }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
