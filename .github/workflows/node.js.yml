@@ -1,11 +1,20 @@
 name: Deploy Frontend App
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       target-env:
         required: true
         type: string
+    secrets:
+      HOST:
+        required: true
+      PORT:
+        required: true
+      KEY:
+        required: true
+      USERNAME:
+        required: true
 
 jobs:
   deploy:
