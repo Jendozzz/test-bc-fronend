@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     if: inputs.target-env == 'deploy on teststand'
     environment: 
-      name: deploy on teststand
+      name: ${{ inputs.target-env }}
     steps:
     - uses: actions/checkout@v4
     - name: set vars
