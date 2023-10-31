@@ -51,10 +51,10 @@ jobs:
       env: 
         FILE: ${{ steps.filename.outputs.FILENAME }}
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+        host: ${{ inputs.target-env.secrets.HOST }}
+        username: ${{ inputs.target-env.secrets.USERNAME }}
+        key: ${{ inputs.target-env.secrets.KEY }}
+        port: ${{ inputs.target-env.secrets.PORT }}
         envs: FILE
         script: |
           s3cmd get -r s3://storage-bc/$FILE
