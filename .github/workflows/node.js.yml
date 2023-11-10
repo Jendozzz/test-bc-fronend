@@ -24,29 +24,44 @@ jobs:
       id: filename
       run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.HASH }}-${{ steps.vars.outputs.DATE }}.zip} 
 
-    - name: install node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
+    # - name: install node
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: 16
         
-    - name: build
-      run: |
-        npm install
-        npm run build
+    # - name: build
+    #   run: |
+    #     npm install
+    #     npm run build
         
-    - name: archive
-      run: |
-        cd dist/business-calendar
-        zip -r "${GITHUB_WORKSPACE}/${{ steps.filename.outputs.FILENAME }}" ./*
+    # - name: archive
+    #   run: |
+    #     cd dist/business-calendar
+    #     zip -r "${GITHUB_WORKSPACE}/${{ steps.filename.outputs.FILENAME }}" ./*
         
-    - name: upload in yandex storage
-      uses: nekitcorp/yandex-storage-website-action@v2
-      with:
-        access-key-id: ${{ secrets.ACCESS_KEY_ID }}
-        secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        bucket: ${{ secrets.BUCKET }}
-        include: |
-          *.zip
+    # - name: upload in yandex storage
+    #   uses: nekitcorp/yandex-storage-website-action@v2
+    #   with:
+    #     access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+    #     secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+    #     bucket: ${{ secrets.BUCKET }}
+    #     include: |
+    #       *.zip
+
+    # - name: connect to vm and deploy 
+    #   uses: appleboy/ssh-action@v1.0.0
+    #   env: 
+    #     FILE: ${{ steps.filename.outputs.FILENAME }}
+    #   with:
+    #     host: ${{ secrets.HOST }}
+    #     username: ${{ secrets.USERNAME }}
+    #     key: ${{ secrets.KEY }}
+    #     port: ${{ secrets.PORT }}
+    #     envs: FILE
+    #     script: |
+    #       s3cmd get -r s3://storage-bc/$FILE
+    #       sudo rm -r /var/www/site
+    #       sudo unzip $FILE -d /var/www/site
 
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
@@ -57,8 +72,11 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
+        proxy_host: ${{ secrets.PROXY_HOST }}
+        proxy_username: ${{ secrets.PROXY_USERNAME }}
+        proxy_key: ${{ secrets.PROXY_KEY }}
+        proxy_port: ${{ secrets.PROXY_PORT }}
         envs: FILE
         script: |
-          s3cmd get -r s3://storage-bc/$FILE
-          sudo rm -r /var/www/site
-          sudo unzip $FILE -d /var/www/site
+          pwd
+          echo $FILE
