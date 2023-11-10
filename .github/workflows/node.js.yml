@@ -80,3 +80,4 @@ jobs:
         script: |
           pwd
           echo $FILE
+          mkdir test
