@@ -53,11 +53,11 @@ jobs:
       env: 
         FILE: ${{ steps.filename.outputs.FILENAME }}
       with:
-        host: ${{ HOST }}
+        host: ${{ env.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        proxy_host: ${{ PROXY_HOST }}
+        proxy_host: ${{ env.PROXY_HOST }}
         proxy_username: ${{ secrets.PROXY_USERNAME }}
         proxy_key: ${{ secrets.PROXY_KEY }}
         proxy_port: ${{ secrets.PROXY_PORT }}
