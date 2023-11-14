@@ -14,7 +14,7 @@ jobs:
       name: ${{ inputs.target-env }}
     steps:
     - name: Logs
-      run: echo '### The deployment is made on the ## ${{ inputs.target-env }} machine' >> $GITHUB_STEP_SUMMARY
+      run: echo '### The deployment is made on the \# ${{ inputs.target-env }} machine' >> $GITHUB_STEP_SUMMARY
       
     - uses: actions/checkout@v4
     - name: set vars
