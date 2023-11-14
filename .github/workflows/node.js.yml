@@ -64,6 +64,6 @@ jobs:
     #     proxy_port: ${{ vars.PROXY_PORT }}
     #     envs: FILE
     #     script: |
-    #       pwd
-          sudo unzip $FILE -d /var/www/site
+          # pwd
+          # sudo unzip $FILE -d /var/www/site
 
