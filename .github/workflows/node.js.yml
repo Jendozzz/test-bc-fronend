@@ -14,6 +14,7 @@ jobs:
       name: ${{ inputs.target-env }}
     steps:
     - name: the deployment is made on the ${{ inputs.target-env }} machine
+      run: echo "the deployment is made on the ${{ inputs.target-env }} machine"
     - uses: actions/checkout@v4
     - name: set vars
       id: vars
