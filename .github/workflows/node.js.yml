@@ -54,13 +54,13 @@ jobs:
         FILE: ${{ steps.filename.outputs.FILENAME }}
       with:
         host: ${{ vars.HOST }}
-        username: ${{ secrets.USERNAME }}
+        username: ${{ vars.USERNAME }}
         key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+        port: ${{ vars.PORT }}
         proxy_host: ${{ vars.PROXY_HOST }}
-        proxy_username: ${{ secrets.PROXY_USERNAME }}
+        proxy_username: ${{ vars.PROXY_USERNAME }}
         proxy_key: ${{ secrets.PROXY_KEY }}
-        proxy_port: ${{ secrets.PROXY_PORT }}
+        proxy_port: ${{ vars.PROXY_PORT }}
         envs: FILE
         script: |
           pwd
