@@ -8,6 +8,11 @@ on:
         type: environment
 
 jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: log
+      run: echo "### he deployment is made on the ${{ inputs.target-env }} machine" >> $GITHUB_STEP_SUMMARY
   build:
     runs-on: ubuntu-latest
     environment: 
@@ -15,6 +20,7 @@ jobs:
     steps:
     - name: the deployment is made on the \# ${{ inputs.target-env }} machine
       run: echo "the deployment is made on the ${{ inputs.target-env }} machine"
+      
     - uses: actions/checkout@v4
     - name: set vars
       id: vars
