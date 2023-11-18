@@ -1,0 +1,38 @@
+name: Deploy Frontend App
+
+on:
+  workflow_dispatch:
+    inputs:
+      target-env:
+        required: true
+        type: environment
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.target-env }}
+    steps:
+    - name: Logs
+      run: echo '### The deployment is made on the `${{ inputs.target-env }}` machine' >> $GITHUB_STEP_SUMMARY
+      
+    - uses: actions/checkout@v4
+    - name: set vars
+      id: vars
+      run: |
+        echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
+        echo ::set-output name=HASH::$(git rev-parse --short ${GITHUB_SHA})
+        echo ::set-output name=DATE::$(date +'%d-%m-%Y')
+    - name: set filename
+      id: filename
+      run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.HASH }}-${{ steps.vars.outputs.DATE }}} 
+
+    - name: install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        
+    - name: build
+      run: |
+        docker build . -t cr.yandex/${{ ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}
+        
