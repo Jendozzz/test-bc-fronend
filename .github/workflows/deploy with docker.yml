@@ -26,13 +26,11 @@ jobs:
     - name: set filename
       id: filename
       run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.HASH }}-${{ steps.vars.outputs.DATE }}} 
-
-    - name: install node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
         
     - name: build
       run: |
         docker build . -t cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}
-        
+
+    - name: upload in Container Registry
+      run: |
+        docker push cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:testtag
