@@ -34,5 +34,5 @@ jobs:
         
     - name: build
       run: |
-        docker build . -t cr.yandex/${{ ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}
+        docker build . -t cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}
         
