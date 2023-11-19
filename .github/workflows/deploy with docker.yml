@@ -23,41 +23,43 @@ jobs:
         echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=HASH::$(git rev-parse --short ${GITHUB_SHA})
         echo ::set-output name=DATE::$(date +'%d-%m-%Y')
-        echo ::set-output name=IMAGENAME::${t-bc-frontend-$BRANCH-$DATE} 
     - name: set imagename
       id: imagename
       run: echo ::set-output name=IMAGENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
     - name: set path to image
       id: path
-      run: echo ::set-output name=PATH::${cr.yandex/${{ vars.ID_container_registry }}/${{ steps.vars.outputs.IMAGENAME }}
+      run: echo ::set-output name=PATH::${cr.yandex/${{ vars.ID_container_registry }}/${{ steps.imagename.outputs.IMAGENAME }}
+    - name: set path with hash
+      id: path_hash
+      run: echo ::set-output name=PATH_HASH::${${{ steps.path.outputs.PATH }}:${{ steps.vars.outputs.HASH }}}
         
-    # - name: build
-    #   run: |
-    #     docker build . -t ${{ steps.path.outputs.PATH }}:${{ steps.vars.outputs.HASH }}}
+    - name: build
+      run: |
+        docker build . -t ${{ steps.path_hash.outputs.PATH_HASH }}
 
-    # - name: Login to Yandex Cloud Container Registry
-    #   id: login-cr
-    #   uses: yc-actions/yc-cr-login@v1
-    #   with:
-    #     yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+    - name: Login to Yandex Cloud Container Registry
+      id: login-cr
+      uses: yc-actions/yc-cr-login@v1
+      with:
+        yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
-    # - name: upload in Container Registry
-    #   run: |
-    #     docker push ${{ steps.path.outputs.PATH }}:${{ steps.vars.outputs.HASH }}}
+    - name: upload in Container Registry
+      run: |
+        docker push ${{ steps.path_hash.outputs.PATH_HASH }}
 
-    # - name: connect to vm and deploy 
-    #   uses: appleboy/ssh-action@v1.0.0
-    #   env: 
-    #     IMAGE: ${{ steps.path.outputs.PATH }}:${{ steps.vars.outputs.HASH }}}
-    #   with:
-    #     host: ${{ vars.HOST }}
-    #     username: ${{ vars.USERNAME }}
-    #     key: ${{ secrets.KEY }}
-    #     port: ${{ vars.PORT }}
-    #     proxy_host: ${{ vars.PROXY_HOST }}
-    #     proxy_username: ${{ vars.PROXY_USERNAME }}
-    #     proxy_key: ${{ secrets.PROXY_KEY }}
-    #     proxy_port: ${{ vars.PROXY_PORT }}
-    #     envs: IMAGE
-    #     script: |
-    #       docker pull $IMAGE
+    - name: connect to vm and deploy 
+      uses: appleboy/ssh-action@v1.0.0
+      env: 
+        IMAGE: ${{ steps.path_hash.outputs.PATH_HASH }}
+      with:
+        host: ${{ vars.HOST }}
+        username: ${{ vars.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ vars.PORT }}
+        proxy_host: ${{ vars.PROXY_HOST }}
+        proxy_username: ${{ vars.PROXY_USERNAME }}
+        proxy_key: ${{ secrets.PROXY_KEY }}
+        proxy_port: ${{ vars.PROXY_PORT }}
+        envs: IMAGE
+        script: |
+          docker pull $IMAGE
