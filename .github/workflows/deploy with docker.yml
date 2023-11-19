@@ -29,7 +29,7 @@ jobs:
         
     - name: build
       run: |
-        docker build . -t cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}
+        docker build . -t cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:${{ steps.vars.outputs.HASH }}
 
     - name: Login to Yandex Cloud Container Registry
       id: login-cr
@@ -38,7 +38,5 @@ jobs:
         yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
     - name: upload in Container Registry
-      env: 
-        TAG: ${{ github.sha }}
       run: |
-        docker push cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:$TAG
+        docker push cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:${{ steps.vars.outputs.HASH }}
