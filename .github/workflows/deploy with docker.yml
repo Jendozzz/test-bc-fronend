@@ -28,7 +28,7 @@ jobs:
       run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
     - name: set imagename
       id: imagename
-      run: echo ::set-output name=IMAGENAME::${cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outupts.FILENAME }}:${{ steps.vars.outputs.HASH }}}
+      run: echo ::set-output name=IMAGENAME::${cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:${{ steps.vars.outputs.HASH }}}
         
     - name: build
       run: |
