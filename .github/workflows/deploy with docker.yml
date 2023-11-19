@@ -25,11 +25,11 @@ jobs:
         echo ::set-output name=DATE::$(date +'%d-%m-%Y')
     - name: set imagename
       id: imagename
-      run: echo ::set-output name=IMAGENAME::${cr.yandex/${{ vars.ID_CONTAINER_REGISTRY }}/bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
+      run: echo ::set-output name=IMAGENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
         
     - name: build
       run: |
-        docker build . -t ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
+        docker build . -t cr.yandex/${{ vars.ID_CONTAINER_REGISTRY }}/${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
 
     - name: Login to Yandex Cloud Container Registry
       id: login-cr
@@ -39,12 +39,12 @@ jobs:
 
     - name: upload in Container Registry
       run: |
-        docker push ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
+        docker push cr.yandex/${{ vars.ID_CONTAINER_REGISTRY }}/${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
 
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        IMAGE: ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
+        IMAGE: cr.yandex/${{ vars.ID_CONTAINER_REGISTRY }}/${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
       with:
         host: ${{ vars.HOST }}
         username: ${{ vars.USERNAME }}
