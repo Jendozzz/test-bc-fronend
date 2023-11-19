@@ -23,15 +23,16 @@ jobs:
         echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=HASH::$(git rev-parse --short ${GITHUB_SHA})
         echo ::set-output name=DATE::$(date +'%d-%m-%Y')
-    - name: set names
-      id: names
-      run: |
-        echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
-        echo ::set-output name=IMAGENAME::${cr.yandex/${{ vars.ID_container_registry }}/$FILENAME:${{ steps.vars.outputs.HASH }}}
+    - name: set filename
+      id: filename
+      run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
+    - name: set imagename
+      id: imagename
+      run: echo ::set-output name=IMAGENAME::${cr.yandex/${{ vars.ID_container_registry }}/${{ steps.vars.outupts.FILENAME }}:${{ steps.vars.outputs.HASH }}}
         
     - name: build
       run: |
-        docker build . -t ${{ steps.names.outputs.IMAGENAME }}
+        docker build . -t ${{ steps.imagename.outputs.IMAGENAME }}
 
     # - name: Login to Yandex Cloud Container Registry
     #   id: login-cr
