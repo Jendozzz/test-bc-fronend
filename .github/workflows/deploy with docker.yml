@@ -23,20 +23,42 @@ jobs:
         echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
         echo ::set-output name=HASH::$(git rev-parse --short ${GITHUB_SHA})
         echo ::set-output name=DATE::$(date +'%d-%m-%Y')
-    - name: set filename
-      id: filename
-      run: echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
+    - name: set names
+      id: names
+      run: |
+        echo ::set-output name=FILENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
+        echo ::set-output name=IMAGENAME::${cr.yandex/${{ vars.ID_container_registry }}/$FILENAME:${{ steps.vars.outputs.HASH }}}
         
     - name: build
       run: |
-        docker build . -t cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:${{ steps.vars.outputs.HASH }}
+        docker build . -t ${{ steps.names.outputs.IMAGENAME }}
 
-    - name: Login to Yandex Cloud Container Registry
-      id: login-cr
-      uses: yc-actions/yc-cr-login@v1
-      with:
-        yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+    # - name: Login to Yandex Cloud Container Registry
+    #   id: login-cr
+    #   uses: yc-actions/yc-cr-login@v1
+    #   with:
+    #     yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
-    - name: upload in Container Registry
-      run: |
-        docker push cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:${{ steps.vars.outputs.HASH }}
+    # - name: upload in Container Registry
+    #   run: |
+    #     docker push cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:${{ steps.vars.outputs.HASH }}
+
+    # - name: connect to vm and deploy 
+    #   uses: appleboy/ssh-action@v1.0.0
+    #   env: 
+    #     FILE: ${{ steps.filename.outputs.FILENAME }}
+    #     BUCKET: ${{ secrets.BUCKET }}
+    #   with:
+    #     host: ${{ vars.HOST }}
+    #     username: ${{ vars.USERNAME }}
+    #     key: ${{ secrets.KEY }}
+    #     port: ${{ vars.PORT }}
+    #     proxy_host: ${{ vars.PROXY_HOST }}
+    #     proxy_username: ${{ vars.PROXY_USERNAME }}
+    #     proxy_key: ${{ secrets.PROXY_KEY }}
+    #     proxy_port: ${{ vars.PROXY_PORT }}
+    #     envs: FILE,BUCKET
+    #     script: |
+    #       s3cmd get -r s3://$BUCKET/$FILE
+    #       sudo rm -r /var/www/site
+    #       sudo unzip $FILE -d /var/www/site
