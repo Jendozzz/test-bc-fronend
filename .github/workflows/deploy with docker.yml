@@ -28,7 +28,7 @@ jobs:
       run: echo ::set-output name=IMAGENAME::${t-bc-frontend-${{ steps.vars.outputs.BRANCH }}-${{ steps.vars.outputs.DATE }}} 
     - name: set path to image
       id: path
-      run: echo ::set-output name=PATH::${cr.yandex/${{ vars.ID_container_registry }}/${{ steps.imagename.outputs.IMAGENAME }}}
+      run: echo ::set-output name=PATH::${cr.yandex\/${{ vars.ID_container_registry }}\/${{ steps.imagename.outputs.IMAGENAME }}}
     - name: set path with hash
       id: path_hash
       run: echo ::set-output name=PATH_HASH::${${{ steps.path.outputs.PATH }}:${{ steps.vars.outputs.HASH }}}
