@@ -29,7 +29,7 @@ jobs:
         
     - name: build
       run: |
-        docker build . -t ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}}
+        docker build . -t ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
 
     - name: Login to Yandex Cloud Container Registry
       id: login-cr
@@ -39,12 +39,12 @@ jobs:
 
     - name: upload in Container Registry
       run: |
-        docker push ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}}
+        docker push ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
 
     - name: connect to vm and deploy 
       uses: appleboy/ssh-action@v1.0.0
       env: 
-        IMAGE: ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}}
+        IMAGE: ${{ steps.imagename.outputs.IMAGENAME }}:${{ steps.vars.outputs.HASH }}
       with:
         host: ${{ vars.HOST }}
         username: ${{ vars.USERNAME }}
