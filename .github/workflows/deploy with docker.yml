@@ -31,6 +31,12 @@ jobs:
       run: |
         docker build . -t cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}
 
+    - name: Login to Yandex Cloud Container Registry
+      id: login-cr
+      uses: yc-actions/yc-cr-login@v1
+      with:
+        yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+
     - name: upload in Container Registry
       run: |
         docker push cr.yandex/${{ vars.ID_container_registry }}/${{ steps.filename.outputs.FILENAME }}:testtag
