@@ -57,6 +57,7 @@ jobs:
         envs: IMAGE
         script: |
           sudo su
+          echo "test"
           docker stop last_frontend
           docker rm last_frontend
           docker pull $IMAGE
