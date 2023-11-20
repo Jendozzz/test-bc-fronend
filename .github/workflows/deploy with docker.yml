@@ -56,7 +56,7 @@ jobs:
         proxy_port: ${{ vars.PROXY_PORT }}
         envs: IMAGE
         script: |
-          sudo docker stop Last_frontend
-          sudo docker rm Last_frontend
+          sudo docker stop last_frontend
+          sudo docker rm last_frontend
           sudo docker pull $IMAGE
-          sudo docker run -d --net=host --restart=always --name=Last_frontend $IMAGE
+          sudo docker run -d --net=host --restart=always --name=last_frontend $IMAGE
